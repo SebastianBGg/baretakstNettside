@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bare Takst AS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1e3a5f;
+  --navy-dark:#152c48;
+  --blue:#2563eb;
+  --blue-light:#eff6ff;
+  --gray-50:#f8fafc;
+  --gray-100:#f1f5f9;
+  --gray-200:#e2e8f0;
+  --gray-400:#94a3b8;
+  --gray-600:#475569;
+  --gray-800:#1e293b;
+  --white:#ffffff;
+  --text:#1e293b;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:#fff;color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{height:34px;}
+.logo-text{font-size:1.1rem;font-weight:700;color:var(--navy);letter-spacing:-0.01em;}
+.logo-text span{color:var(--blue);}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
+.nav-links a{color:var(--gray-600);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.15s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:9px 20px;border-radius:6px;font-weight:600!important;font-size:14px!important;}
+.nav-cta:hover{background:#1d4ed8!important;color:#fff!important;}
+
+.hero{background:var(--navy);padding:120px 2.5rem 80px;text-align:center;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.15);margin-bottom:1.5rem;}
+.hero h1{font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1.25rem;max-width:700px;margin-left:auto;margin-right:auto;}
+.hero-sub{font-size:1.1rem;color:rgba(255,255,255,0.65);max-width:520px;margin:0 auto 2.5rem;line-height:1.7;}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-white{background:#fff;color:var(--navy);padding:13px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:15px;transition:background 0.15s;}
+.btn-white:hover{background:var(--gray-100);}
+.btn-outline{background:transparent;color:#fff;padding:13px 28px;border-radius:6px;border:1.5px solid rgba(255,255,255,0.3);text-decoration:none;font-weight:500;font-size:15px;transition:border-color 0.15s;}
+.btn-outline:hover{border-color:rgba(255,255,255,0.7);}
+.hero-stats{display:flex;justify-content:center;gap:0;margin-top:4rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:2.5rem;}
+.hero-stat{flex:1;max-width:180px;text-align:center;padding:0 1.5rem;}
+.hero-stat+.hero-stat{border-left:1px solid rgba(255,255,255,0.1);}
+.hero-stat-num{font-size:2rem;font-weight:700;color:#fff;line-height:1;}
+.hero-stat-label{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px;}
+
+section{padding:5rem 2.5rem;}
+.container{max-width:1100px;margin:0 auto;}
+.label{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:0.6rem;display:block;}
+h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--gray-800);letter-spacing:-0.02em;line-height:1.2;margin-bottom:0.75rem;}
+.lead{color:var(--gray-600);font-size:1.05rem;max-width:520px;margin-bottom:3rem;line-height:1.75;}
+
+#om{background:var(--gray-50);}
+.om-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.check-list li{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--gray-600);}
+.check-list li::before{content:'';width:18px;height:18px;min-width:18px;border-radius:50%;background:var(--blue);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:10px;margin-top:2px;}
+.quote-block{margin-top:2rem;padding:1.25rem 1.5rem;background:#fff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.quote-block p{font-size:15px;font-style:italic;color:var(--gray-600);line-height:1.7;}
+
+#tjenester{background:#fff;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;}
+.card{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:1.75rem;transition:box-shadow 0.2s,transform 0.2s;}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.07);transform:translateY(-2px);}
+.card-icon{width:40px;height:40px;background:var(--blue-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:1rem;}
+.card h3{font-size:1rem;font-weight:600;color:var(--gray-800);margin-bottom:0.4rem;}
+.card p{font-size:14px;color:var(--gray-600);line-height:1.65;}
+
+#priser{background:var(--gray-50);}
+.tabs{display:flex;gap:6px;margin-bottom:2rem;border-bottom:1px solid var(--gray-200);padding-bottom:0;}
+.tab{padding:10px 18px;border:none;border-bottom:2px solid transparent;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all 0.15s;margin-bottom:-1px;}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab:hover:not(.active){color:var(--gray-800);}
+.pris-panel{display:none;}
+.pris-panel.active{display:block;}
+.pris-table{width:100%;border-collapse:collapse;}
+.pris-table tr{border-bottom:1px solid var(--gray-200);}
+.pris-table tr:last-child{border-bottom:none;}
+.pris-table td{padding:13px 0;font-size:15px;color:var(--gray-600);}
+.pris-table td:last-child{text-align:right;font-weight:600;color:var(--gray-800);}
+.pris-note{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--blue-light);border-radius:8px;font-size:14px;color:#1e40af;}
+
+#bestill{background:#fff;}
+.bestill-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.form-group{margin-bottom:1.1rem;}
+.form-group label{display:block;font-size:13px;font-weight:500;color:var(--gray-800);margin-bottom:5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:1.5px solid var(--gray-200);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);background:#fff;outline:none;transition:border-color 0.15s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);}
+.form-group textarea{height:90px;resize:vertical;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-submit{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:background 0.15s;margin-top:6px;}
+.btn-submit:hover:not(:disabled){background:#1d4ed8;}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;}
+.contact-cards{display:flex;flex-direction:column;gap:1rem;}
+.contact-card{display:flex;gap:12px;align-items:center;padding:1rem 1.25rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;}
+.contact-ic{width:36px;height:36px;min-width:36px;background:var(--navy);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.contact-label{font-size:12px;color:var(--gray-400);margin-bottom:2px;}
+.contact-val{font-size:15px;font-weight:500;color:var(--gray-800);}
+.contact-val a{color:inherit;text-decoration:none;}
+.contact-val a:hover{color:var(--blue);}
+.trust-items{margin-top:2rem;display:flex;flex-direction:column;gap:8px;}
+.trust-item{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--gray-600);}
+.trust-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+
+footer{background:var(--navy-dark);color:rgba(255,255,255,0.45);padding:2rem 2.5rem;text-align:center;font-size:13px;}
+footer a{color:rgba(255,255,255,0.55);text-decoration:none;}
+footer a:hover{color:#fff;}
+footer strong{color:rgba(255,255,255,0.75);}
+
+.success-msg{display:none;padding:1.5rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;text-align:center;color:#166534;font-size:15px;font-weight:500;}
+.success-msg.show{display:block;}
+.error-msg{display:none;padding:1rem 1.25rem;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:14px;margin-top:0.75rem;}
+.error-msg.show{display:block;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#top">
+    <img src="logo.png" alt="Bare Takst" onerror="this.style.display='none'">
+    <span class="logo-text">Bare Takst <span>AS</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#om">Om oss</a></li>
+    <li><a href="#tjenester">Tjenester</a></li>
+    <li><a href="#priser">Priser</a></li>
+    <li><a href="#bestill" class="nav-cta">Bestill takst</a></li>
+  </ul>
+</nav>
+
+<div class="hero" id="top">
+  <div class="hero-badge">Sertifisert takstmann · Lund, Kristiansand</div>
+  <h1>Profesjonell takst du kan stole på</h1>
+  <p class="hero-sub">Grundige tilstandsrapporter og verdivurderinger – enten du skal kjøpe, selge eller rehabilitere bolig.</p>
+  <div class="hero-actions">
+    <a href="#bestill" class="btn-white">Bestill takst</a>
+    <a href="#priser" class="btn-outline">Se priser</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">NS 3600</div>
+      <div class="hero-stat-label">Godkjent standard</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100%</div>
+      <div class="hero-stat-label">Uavhengig</div>
+    </div>
+  </div>
+</div>
+
+<section id="om">
+  <div class="container">
+    <div class="om-grid">
+      <div>
+        <span class="label">Om oss</span>
+        <h2>Håndverk møter fagkunnskap</h2>
+        <p style="color:var(--gray-600);font-size:15px;line-height:1.8;margin-bottom:1.5rem;">Bare Takst AS er et faglig sterkt takseringsfirma med erfaring innen tilstandsrapporter og verdivurdering av boliger. Vi leverer grundige, objektive vurderinger som gir deg et trygt beslutningsgrunnlag.</p>
+        <ul class="check-list">
+          <li>Sertifisert takstmann med bred erfaring</li>
+          <li>Murmesterkompetanse – ekstra innsikt i konstruksjon og fukt</li>
+          <li>Spesialisert på tilstandsrapporter etter NS 3600</li>
+          <li>Nøyaktighet, tydelig dokumentasjon og rask levering</li>
+        </ul>
+      </div>
+      <div>
+        <span class="label">Vår filosofi</span>
+        <div class="quote-block">
+          <p>Bare riktig takst – ingen snarveier. Vi mener at godt håndverk og ærlige vurderinger skaper tryggere bolighandler.</p>
+        </div>
+        <div style="margin-top:2rem;">
+          <h3 style="font-size:14px;font-weight:600;color:var(--gray-800);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.06em;">Trygghet og kvalitet</h3>
+          <ul class="check-list">
+            <li>Uavhengige og objektive vurderinger</li>
+            <li>Rapporter etter gjeldende standarder</li>
+            <li>Fagperson med forståelse for teori og praksis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tjenester">
+  <div class="container">
+    <span class="label">Tjenester</span>
+    <h2>Hva vi tilbyr</h2>
+    <p class="lead">Fra tilstandsrapport til rådgivning – vi dekker alle behov knyttet til eiendomsvurdering.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🏠</div>
+        <h3>Tilstandsrapport ved salg</h3>
+        <p>NS 3600-godkjent rapport etter ny avhendingslov. Grundig gjennomgang av boligens tekniske tilstand.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <h3>Verditakst og lånetakst</h3>
+        <p>Profesjonell verdivurdering for kjøp, salg, refinansiering eller forsikring. Anerkjent av banker og meglere.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Byggtekniske vurderinger</h3>
+        <p>Teknisk analyse av konstruksjon, fukt og skader – med murmesterkompetanse som gir deg ekstra innsikt.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <h3>Rådgivning</h3>
+        <p>Uavhengige råd før kjøp eller oppussing. Vi hjelper deg å ta riktige beslutninger.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="priser">
+  <div class="container">
+    <span class="label">Priser</span>
+    <h2>Prisliste fra 01.01.2026</h2>
+    <p class="lead">Alle priser er inkl. mva. Klikkavgift og adm. gebyr kr 1 200,- kommer i tillegg på alle oppdrag.</p>
+    <div class="tabs">
+      <button class="tab active" onclick="visTab('leil',this)">Leilighet i blokk</button>
+      <button class="tab" onclick="visTab('ene',this)">Enebolig / Hytte / Rekkehus</button>
+      <button class="tab" onclick="visTab('till',this)">Tillegg og gebyrer</button>
+    </div>
+    <div id="p-leil" class="pris-panel active">
+      <p style="font-size:13px;color:var(--gray-400);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;">Kun innvendig vurdering</p>
+      <table class="pris-table">
+        <tr><td>0 – 50 m² BRA</td><td>kr 8 000,-</td></tr>
+        <tr><td>51 – 100 m² BRA</td><td>kr 9 500,-</td></tr>
+        <tr><td>101 – 150 m² BRA</td><td>kr 11 000,-</td></tr>
+        <tr><td>151 – 200 m² BRA</td><td>kr 13 500,-</td></tr>
+      </table>
+      <div class="pris-note">Firemannsbolig: Tillegg kr 1 000,- for utvendig og innvendig vurdering.</div>
+    </div>
+    <div id="p-ene" class="pris-panel">
+      <p style="font-size:13px;color:var(--gray-400);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;">Hytte · Enebolig · Tomannsbolig · Rekkehus</p>
+      <table class="pris-table">
+        <tr><td>0 – 100 m² BRA</td><td>kr 12 500,-</td></tr>
+        <tr><td>101 – 150 m² BRA</td><td>kr 14 500,-</td></tr>
+        <tr><td>151 – 200 m² BRA</td><td>kr 16 000,-</td></tr>
+        <tr><td>201 – 300 m² BRA</td><td>kr 17 500,-</td></tr>
+        <tr><td>Over 300 m²</td><td>Pris på forespørsel</td></tr>
+      </table>
+    </div>
+    <div id="p-till" class="pris-panel">
+      <table class="pris-table">
+        <tr><td>Kjeller / underetasje</td><td>+ kr 2 500,-</td></tr>
+        <tr><td>Utleiedel / hybel</td><td>+ kr 2 500,-</td></tr>
+        <tr><td>Ekstra våtrom (utover 3 stk.) – pr. rom</td><td>+ kr 1 500,-</td></tr>
+        <tr><td>Garasje / uthus / anneks / bod</td><td>+ kr 2 500,-</td></tr>
+        <tr><td>Hulltaking til våtrom – pr. hull</td><td>+ kr 600,-</td></tr>
+        <tr><td>Arealmåling – pr. time</td><td>kr 1 600,-</td></tr>
+        <tr><td>Kjøring utover 30 km – pr. km</td><td>+ kr 8,-</td></tr>
+        <tr><td>Klikkavgift og adm. gebyr (alle oppdrag)</td><td>+ kr 1 200,-</td></tr>
+      </table>
+      <div class="pris-note">60 km kjøring er inkludert i alle priser (30 km tur/retur fra Lund).</div>
+    </div>
+  </div>
+</section>
+
+<section id="bestill">
+  <div class="container">
+    <div class="bestill-grid">
+      <div>
+        <span class="label">Kontakt</span>
+        <h2>Ta kontakt i dag</h2>
+        <p style="color:var(--gray-600);font-size:15px;margin-bottom:1.5rem;">Vi svarer raskt og kan som regel komme på befaring i løpet av få dager.</p>
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="contact-ic">📞</div>
+            <div>
+              <div class="contact-label">Telefon</div>
+              <div class="contact-val"><a href="tel:93234128">932 34 128</a></div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-ic">✉️</div>
+            <div>
+              <div class="contact-label">E-post</div>
+              <div class="contact-val"><a href="mailto:gbardoff@icloud.com">gbardoff@icloud.com</a></div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-ic">📍</div>
+            <div>
+              <div class="contact-label">Kontor</div>
+              <div class="contact-val">Lund, Kristiansand</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-ic">🏢</div>
+            <div>
+              <div class="contact-label">Org.nr.</div>
+              <div class="contact-val">931 962 450</div>
+            </div>
+          </div>
+        </div>
+        <div class="trust-items">
+          <div class="trust-item"><div class="trust-dot"></div>Rask respons og levering</div>
+          <div class="trust-item"><div class="trust-dot"></div>Uavhengige og objektive vurderinger</div>
+          <div class="trust-item"><div class="trust-dot"></div>Rapporter etter gjeldende standarder</div>
+        </div>
+      </div>
+      <div>
+        <form id="bestillForm" onsubmit="sendForm(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Fornavn *</label><input id="fornavn" type="text" placeholder="Ola" required></div>
+            <div class="form-group"><label>Etternavn *</label><input id="etternavn" type="text" placeholder="Nordmann" required></div>
+          </div>
+          <div class="form-group"><label>Telefon *</label><input id="telefon" type="tel" placeholder="900 00 000" required></div>
+          <div class="form-group"><label>E-post *</label><input id="epost" type="email" placeholder="din@epost.no" required></div>
+          <div class="form-group"><label>Boligadresse</label><input id="adresse" type="text" placeholder="Gateadresse, postnummer og sted"></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tjeneste</label>
+              <select id="tjeneste">
+                <option value="">Velg...</option>
+                <option>Tilstandsrapport ved salg</option>
+                <option>Verditakst</option>
+                <option>Lånetakst</option>
+                <option>Byggteknisk vurdering</option>
+                <option>Rådgivning</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Boligtype</label>
+              <select id="boligtype">
+                <option value="">Velg...</option>
+                <option>Leilighet i blokk</option>
+                <option>Enebolig</option>
+                <option>Hytte</option>
+                <option>Tomannsbolig</option>
+                <option>Rekkehus</option>
+                <option>Annet</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Ca. størrelse (m² BRA)</label><input id="storrelse" type="number" placeholder="F.eks. 85"></div>
+          <div class="form-group"><label>Melding / ønsket tidspunkt</label><textarea id="melding" placeholder="Beskriv kort hva du trenger, og om du har foretrukne datoer..."></textarea></div>
+          <button type="submit" class="btn-submit" id="submitBtn">Send bestilling</button>
+        </form>
+        <div class="error-msg" id="errorMsg">Noe gikk galt. Prøv igjen eller ring oss på 932 34 128.</div>
+        <div class="success-msg" id="successMsg">✓ Takk! Vi tar kontakt med deg så snart som mulig.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Bare Takst AS</strong> · Org.nr. 931 962 450 · Lund, Kristiansand<br>
+  <a href="tel:93234128">932 34 128</a> · <a href="mailto:gbardoff@icloud.com">gbardoff@icloud.com</a><br>
+  <span style="margin-top:0.5rem;display:block;">© 2026 Bare Takst AS · Alle priser inkl. mva.</span>
+</footer>
+
+<script>
+function visTab(id, btn) {
+  document.querySelectorAll('.pris-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('p-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+async function sendForm(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  btn.disabled = true;
+  btn.textContent = 'Sender...';
+  errorMsg.classList.remove('show');
+
+  const data = {
+    fornavn: document.getElementById('fornavn').value,
+    etternavn: document.getElementById('etternavn').value,
+    telefon: document.getElementById('telefon').value,
+    epost: document.getElementById('epost').value,
+    adresse: document.getElementById('adresse').value,
+    tjeneste: document.getElementById('tjeneste').value,
+    boligtype: document.getElementById('boligtype').value,
+    storrelse: document.getElementById('storrelse').value,
+    melding: document.getElementById('melding').value,
+  };
+
+  try {
+    const res = await fetch('/api/bestill', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const json = await res.json();
+    if (json.ok) {
+      document.getElementById('bestillForm').style.display = 'none';
+      document.getElementById('successMsg').classList.add('show');
+    } else {
+      throw new Error(json.error);
+    }
+  } catch (err) {
+    errorMsg.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Send bestilling';
+  }
+}
+</script>
+</body>
+</html>

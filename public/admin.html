@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Bare Takst AS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1e3a5f;
+  --navy-dark:#152c48;
+  --blue:#2563eb;
+  --blue-light:#eff6ff;
+  --gray-50:#f8fafc;
+  --gray-100:#f1f5f9;
+  --gray-200:#e2e8f0;
+  --gray-400:#94a3b8;
+  --gray-600:#475569;
+  --gray-800:#1e293b;
+  --green:#16a34a;
+  --green-light:#f0fdf4;
+  --yellow:#d97706;
+  --yellow-light:#fffbeb;
+  --red:#dc2626;
+  --red-light:#fef2f2;
+}
+body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-800);min-height:100vh;}
+
+/* Login */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
+.login-box{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:2.5rem;width:100%;max-width:380px;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
+.login-logo{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem;}
+.login-logo span{color:var(--blue);}
+.login-sub{font-size:13px;color:var(--gray-400);margin-bottom:2rem;}
+.login-box label{display:block;font-size:13px;font-weight:500;color:var(--gray-800);margin-bottom:5px;}
+.login-box input{width:100%;padding:10px 13px;border:1.5px solid var(--gray-200);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.15s;margin-bottom:1rem;}
+.login-box input:focus{border-color:var(--blue);}
+.login-btn{width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:background 0.15s;}
+.login-btn:hover{background:var(--navy-dark);}
+.login-error{margin-top:0.75rem;padding:0.75rem 1rem;background:var(--red-light);border-radius:6px;color:var(--red);font-size:13px;display:none;}
+.login-error.show{display:block;}
+
+/* App */
+#appScreen{display:none;}
+header{background:var(--navy);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.header-logo{font-size:15px;font-weight:700;color:#fff;}
+.header-logo span{color:#93c5fd;}
+.header-right{display:flex;align-items:center;gap:1rem;}
+.header-right a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;}
+.header-right a:hover{color:#fff;}
+.logout-btn{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:6px 14px;border-radius:5px;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;transition:background 0.15s;}
+.logout-btn:hover{background:rgba(255,255,255,0.2);}
+
+.main{max-width:1200px;margin:0 auto;padding:2rem;}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.stat-card{background:#fff;border:1px solid var(--gray-200);border-radius:8px;padding:1.25rem 1.5rem;}
+.stat-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray-400);margin-bottom:0.5rem;}
+.stat-num{font-size:2rem;font-weight:700;color:var(--gray-800);}
+
+.toolbar{display:flex;gap:0.75rem;margin-bottom:1.5rem;align-items:center;flex-wrap:wrap;}
+.toolbar input{padding:9px 13px;border:1.5px solid var(--gray-200);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;outline:none;width:240px;}
+.toolbar input:focus{border-color:var(--blue);}
+.filter-btn{padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:6px;background:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:var(--gray-600);transition:all 0.15s;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--navy);color:var(--navy);}
+
+.table-wrap{background:#fff;border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead{background:var(--gray-50);}
+th{padding:11px 14px;text-align:left;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-400);border-bottom:1px solid var(--gray-200);}
+td{padding:13px 14px;font-size:14px;color:var(--gray-600);border-bottom:1px solid var(--gray-100);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--gray-50);}
+.name{font-weight:600;color:var(--gray-800);}
+.meta{font-size:12px;color:var(--gray-400);margin-top:2px;}
+
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:600;}
+.badge-ny{background:#dbeafe;color:#1e40af;}
+.badge-kontaktet{background:var(--yellow-light);color:var(--yellow);}
+.badge-fullfort{background:var(--green-light);color:var(--green);}
+.badge-avbrutt{background:var(--red-light);color:var(--red);}
+
+.status-select{padding:5px 8px;border:1.5px solid var(--gray-200);border-radius:5px;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;background:#fff;color:var(--gray-800);outline:none;}
+.status-select:focus{border-color:var(--blue);}
+
+.del-btn{padding:5px 10px;border:1.5px solid var(--gray-200);border-radius:5px;background:#fff;color:var(--red);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all 0.15s;}
+.del-btn:hover{border-color:var(--red);background:var(--red-light);}
+
+.empty{padding:3rem;text-align:center;color:var(--gray-400);font-size:15px;}
+.loading{padding:3rem;text-align:center;color:var(--gray-400);}
+
+.refresh-btn{margin-left:auto;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:6px;background:#fff;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;color:var(--gray-600);display:flex;align-items:center;gap:6px;}
+.refresh-btn:hover{border-color:var(--navy);color:var(--navy);}
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Bare Takst <span>AS</span></div>
+    <div class="login-sub">Adminpanel – kun for intern bruk</div>
+    <label>Passord</label>
+    <input type="password" id="passordInput" placeholder="Skriv inn passord" onkeydown="if(event.key==='Enter')loggInn()">
+    <button class="login-btn" onclick="loggInn()">Logg inn</button>
+    <div class="login-error" id="loginError">Feil passord. Prøv igjen.</div>
+  </div>
+</div>
+
+<!-- App -->
+<div id="appScreen">
+  <header>
+    <div class="header-logo">Bare Takst <span>AS</span> · Admin</div>
+    <div class="header-right">
+      <a href="/" target="_blank">← Til nettside</a>
+      <button class="logout-btn" onclick="loggUt()">Logg ut</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card"><div class="stat-label">Totalt</div><div class="stat-num" id="statTotalt">–</div></div>
+      <div class="stat-card"><div class="stat-label">Nye</div><div class="stat-num" id="statNy">–</div></div>
+      <div class="stat-card"><div class="stat-label">Kontaktet</div><div class="stat-num" id="statKontaktet">–</div></div>
+      <div class="stat-card"><div class="stat-label">Fullført</div><div class="stat-num" id="statFullfort">–</div></div>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" id="sokInput" placeholder="Søk navn, telefon, adresse..." oninput="renderTabell()">
+      <button class="filter-btn active" onclick="setFilter('', this)">Alle</button>
+      <button class="filter-btn" onclick="setFilter('Ny', this)">Nye</button>
+      <button class="filter-btn" onclick="setFilter('Kontaktet', this)">Kontaktet</button>
+      <button class="filter-btn" onclick="setFilter('Fullfort', this)">Fullført</button>
+      <button class="filter-btn" onclick="setFilter('Avbrutt', this)">Avbrutt</button>
+      <button class="refresh-btn" onclick="lastBestillinger()">↻ Oppdater</button>
+    </div>
+
+    <div class="table-wrap">
+      <div class="loading" id="loading">Laster bestillinger...</div>
+      <table id="bestillTabell" style="display:none">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kunde</th>
+            <th>Kontakt</th>
+            <th>Tjeneste</th>
+            <th>Bolig</th>
+            <th>Dato</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabellBody"></tbody>
+      </table>
+      <div class="empty" id="emptyMsg" style="display:none">Ingen bestillinger funnet.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let passord = '';
+let alleBestillinger = [];
+let aktivFilter = '';
+
+function loggInn() {
+  const p = document.getElementById('passordInput').value;
+  if (!p) return;
+  passord = p;
+  lastBestillinger();
+}
+
+function loggUt() {
+  passord = '';
+  alleBestillinger = [];
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('passordInput').value = '';
+}
+
+function setFilter(filter, btn) {
+  aktivFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTabell();
+}
+
+async function lastBestillinger() {
+  try {
+    const res = await fetch('/api/admin/bestillinger', {
+      headers: { 'x-admin-password': passord }
+    });
+    if (res.status === 401) {
+      document.getElementById('loginError').classList.add('show');
+      return;
+    }
+    document.getElementById('loginError').classList.remove('show');
+    alleBestillinger = await res.json();
+
+    // Vis app
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('bestillTabell').style.display = 'table';
+
+    oppdaterStats();
+    renderTabell();
+  } catch (err) {
+    alert('Kunne ikke koble til serveren.');
+  }
+}
+
+function oppdaterStats() {
+  document.getElementById('statTotalt').textContent = alleBestillinger.length;
+  document.getElementById('statNy').textContent = alleBestillinger.filter(b => b.status === 'Ny').length;
+  document.getElementById('statKontaktet').textContent = alleBestillinger.filter(b => b.status === 'Kontaktet').length;
+  document.getElementById('statFullfort').textContent = alleBestillinger.filter(b => b.status === 'Fullfort').length;
+}
+
+function renderTabell() {
+  const sok = document.getElementById('sokInput').value.toLowerCase();
+  let liste = alleBestillinger;
+
+  if (aktivFilter) liste = liste.filter(b => b.status === aktivFilter);
+  if (sok) liste = liste.filter(b =>
+    `${b.fornavn} ${b.etternavn} ${b.telefon} ${b.epost} ${b.adresse || ''}`.toLowerCase().includes(sok)
+  );
+
+  const tbody = document.getElementById('tabellBody');
+  const empty = document.getElementById('emptyMsg');
+
+  if (liste.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = liste.map(b => {
+    const dato = new Date(b.opprettet).toLocaleDateString('no-NO', { day:'2-digit', month:'short', year:'numeric' });
+    const badgeKlasse = {
+      'Ny': 'badge-ny',
+      'Kontaktet': 'badge-kontaktet',
+      'Fullfort': 'badge-fullfort',
+      'Avbrutt': 'badge-avbrutt'
+    }[b.status] || 'badge-ny';
+
+    return `<tr>
+      <td style="color:var(--gray-400);font-size:13px">#${b.id}</td>
+      <td>
+        <div class="name">${esc(b.fornavn)} ${esc(b.etternavn)}</div>
+        ${b.adresse ? `<div class="meta">${esc(b.adresse)}</div>` : ''}
+      </td>
+      <td>
+        <div>${esc(b.telefon)}</div>
+        <div class="meta">${esc(b.epost)}</div>
+      </td>
+      <td>
+        <div>${esc(b.tjeneste || '–')}</div>
+        ${b.storrelse ? `<div class="meta">${esc(b.storrelse)} m²</div>` : ''}
+      </td>
+      <td>
+        <div>${esc(b.boligtype || '–')}</div>
+        ${b.melding ? `<div class="meta" style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(b.melding)}</div>` : ''}
+      </td>
+      <td style="white-space:nowrap">${dato}</td>
+      <td>
+        <select class="status-select" onchange="oppdaterStatus(${b.id}, this.value)">
+          <option ${b.status==='Ny'?'selected':''}>Ny</option>
+          <option ${b.status==='Kontaktet'?'selected':''}>Kontaktet</option>
+          <option value="Fullfort" ${b.status==='Fullfort'?'selected':''}>Fullført</option>
+          <option ${b.status==='Avbrutt'?'selected':''}>Avbrutt</option>
+        </select>
+      </td>
+      <td><button class="del-btn" onclick="slettBestilling(${b.id})">Slett</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function oppdaterStatus(id, status) {
+  await fetch(`/api/admin/bestillinger/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', 'x-admin-password': passord },
+    body: JSON.stringify({ status })
+  });
+  const b = alleBestillinger.find(x => x.id === id);
+  if (b) b.status = status;
+  oppdaterStats();
+}
+
+async function slettBestilling(id) {
+  if (!confirm('Slette denne bestillingen?')) return;
+  await fetch(`/api/admin/bestillinger/${id}`, {
+    method: 'DELETE',
+    headers: { 'x-admin-password': passord }
+  });
+  alleBestillinger = alleBestillinger.filter(b => b.id !== id);
+  oppdaterStats();
+  renderTabell();
+}
+</script>
+</body>
+</html>
