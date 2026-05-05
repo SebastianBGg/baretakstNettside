@@ -35,7 +35,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-botto
 .nav-cta{background:var(--blue)!important;color:#fff!important;padding:9px 20px;border-radius:6px;font-weight:600!important;font-size:14px!important;}
 .nav-cta:hover{background:#1d4ed8!important;color:#fff!important;}
 
-.hero{background:var(--navy);padding:140px 2.5rem 60px;text-align:center;}
+.hero{background:var(--navy);padding:140px 2.5rem 60px;text-align:center;position:relative;overflow:hidden;}
+
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.hero-bg-track{display:flex;gap:0;animation:scrollLeft 40s linear infinite;width:max-content;}
+.hero-bg-track img{height:100%;width:400px;object-fit:cover;opacity:0.18;filter:grayscale(30%);}
+@keyframes scrollLeft{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(30,58,95,0.7) 0%, rgba(30,58,95,0.5) 50%, rgba(30,58,95,0.85) 100%);z-index:1;}
+.hero>*:not(.hero-bg):not(.hero-overlay){position:relative;z-index:2;}
 .hero-badge{display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.15);margin-bottom:1.5rem;}
 .hero h1{font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1.25rem;max-width:700px;margin-left:auto;margin-right:auto;}
 .hero-sub{font-size:1.1rem;color:rgba(255,255,255,0.65);max-width:520px;margin:0 auto 2.5rem;line-height:1.7;}
@@ -135,6 +145,10 @@ footer strong{color:rgba(255,255,255,0.75);}
 </nav>
 
 <div class="hero" id="top">
+  <div class="hero-bg">
+    <div class="hero-bg-track" id="heroTrack"></div>
+  </div>
+  <div class="hero-overlay"></div>
   <div class="hero-badge">Sertifisert takstmann · Lund, Kristiansand</div>
   <h1>Profesjonell takst du kan stole på</h1>
   <p class="hero-sub">Grundige tilstandsrapporter og verdivurderinger – enten du skal kjøpe, selge eller rehabilitere bolig.</p>
@@ -365,7 +379,33 @@ footer strong{color:rgba(255,255,255,0.75);}
 </footer>
 
 <script>
-function visTab(id, btn) {
+// Populate scrolling hero images
+const heroImages = [
+  'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80',
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
+  'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80',
+  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+  'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=800&q=80',
+  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
+];
+const track = document.getElementById('heroTrack');
+// Duplicate for seamless loop
+[...heroImages, ...heroImages].forEach(src => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = '';
+  track.appendChild(img);
+});
+// Set track height to match hero
+function setTrackHeight() {
+  const hero = document.querySelector('.hero');
+  track.style.height = hero.offsetHeight + 'px';
+}
+setTrackHeight();
+window.addEventListener('resize', setTrackHeight);
+</script>
   document.querySelectorAll('.pris-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('p-' + id).classList.add('active');
