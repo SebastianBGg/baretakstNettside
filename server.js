@@ -12,7 +12,7 @@ const pool = new Pool({
 });
 
 // Admin-passord – sett ADMIN_PASSWORD i Railway environment variables
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'baretakst2026';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
