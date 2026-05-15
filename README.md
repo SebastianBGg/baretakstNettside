@@ -1,50 +1,44 @@
-# Bare Takst AS – Fullstack booking-system
+# Bare Takst AS – Fullstack Booking-løsning
 
-## Struktur
+Dette er en skreddersydd webapplikasjon utviklet for Bare Takst AS. Prosjektet er bygget som en fullstack-løsning for å håndtere kundehenvendelser og administrasjon av bestillinger gjennom et dedikert kontrollpanel.
 
-```
-bare_takst_app/
-├── server.js          # Express-server med alle API-endepunkter
-├── package.json       # Avhengigheter
-├── public/
-│   ├── index.html     # Nettsiden (med skjema som sender til API)
-│   ├── admin.html     # Admin-panel (/admin)
-│   └── logo.png       # Logo
-```
+## 🚀 Teknologier
 
-## Deploy på Railway
+Prosjektet er bygget med fokus på ytelse og enkel skalering:
 
-### 1. Opprett prosjekt
-- Gå til [railway.app](https://railway.app) og logg inn
-- Klikk **New Project → Deploy from GitHub repo**
-- Push denne mappen til et GitHub-repo, og velg det
+* **Frontend:** HTML5, CSS3 og JavaScript (Vanilla) for et responsivt og lettvektig brukergrensesnitt.
+* **Backend:** Node.js med Express-rammeverket for håndtering av API-logikk.
+* **Database:** PostgreSQL for sikker lagring av bestillingsdata og håndtering av relasjonelle data.
+* **Hosting/Infrastruktur:** Deployet på Railway med kontinuerlig integrasjon (CI/CD) fra GitHub.
 
-### 2. Legg til PostgreSQL-database
-- I Railway-prosjektet: klikk **+ New → Database → PostgreSQL**
-- Railway setter automatisk `DATABASE_URL` i miljøvariablene til appen din
+## 🛠 Funksjonalitet
 
-### 3. Sett miljøvariabler
-Gå til appen din i Railway → **Variables** og legg til:
+Applikasjonen består av to hoveddeler:
 
-| Variabel | Verdi |
-|----------|-------|
-| `ADMIN_PASSWORD` | Velg et sterkt passord |
+### Kunde-grensesnitt
+* **Dynamisk bookingskjema:** Validerer brukerinput før innsending for å sikre datakvalitet.
+* **API-integrasjon:** Automatisert kommunikasjon mot backend for umiddelbar registrering av oppdrag.
 
-`DATABASE_URL` settes automatisk av Railway.
+### Admin-panel (Dashboard)
+* **Autentisering:** Sikker tilgangsstyring via miljøvariabler og passordbeskyttelse for administrative oppgaver.
+* **Ordrehåndtering:** Full CRUD-funksjonalitet (Create, Read, Update, Delete) for effektiv administrasjon av bestillinger.
+* **Statuskontroll:** Mulighet for å oppdatere oppdragsstatus i sanntid via PATCH-endepunkter.
 
-### 4. Deploy
-Railway starter automatisk. Appen er klar på din Railway-URL.
+## 🏗 Systemarkitektur
 
-## URL-er
-- **Nettside:** `https://din-app.railway.app/`
-- **Admin-panel:** `https://din-app.railway.app/admin`
+Prosjektet følger en modulær struktur for å skille logikk og presentasjon:
 
-## API-endepunkter
+* `/public`: Inneholder klientside-filer og statiske ressurser (HTML, CSS, bilder).
+* `server.js`: Sentral backend-logikk som håndterer ruting, databasetilkobling og sikkerhetstiltak.
+* **REST API:** Veldefinerte endepunkter for sikker kommunikasjon, inkludert bruk av tilpassede headere (`x-admin-password`) for beskyttede ressurser.
+
+---
+
+### API-oversikt
+
 | Metode | Endepunkt | Beskrivelse |
 |--------|-----------|-------------|
-| POST | `/api/bestill` | Ta imot ny bestilling |
-| GET | `/api/admin/bestillinger` | Hent alle (krever passord) |
-| PATCH | `/api/admin/bestillinger/:id` | Oppdater status |
-| DELETE | `/api/admin/bestillinger/:id` | Slett bestilling |
-
-Admin-API-et krever headeren `x-admin-password` med riktig passord.
+| POST | `/api/bestill` | Tar imot og lagrer ny bestilling fra kunde |
+| GET | `/api/admin/bestillinger` | Henter alle bestillinger (krever autentisering) |
+| PATCH | `/api/admin/bestillinger/:id` | Oppdaterer status på en spesifikk ordre |
+| DELETE | `/api/admin/bestillinger/:id` | Sletter en bestilling fra systemet |
