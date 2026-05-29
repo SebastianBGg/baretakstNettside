@@ -1,7 +1,8 @@
 const express = require('express');
 const { Pool } = require('pg');
 const path = require('path');
-
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -42,17 +43,33 @@ async function initDB() {
 // --- API: Ta imot bestilling ---
 app.post('/api/bestill', async (req, res) => {
   const { fornavn, etternavn, telefon, epost, adresse, tjeneste, boligtype, storrelse, melding } = req.body;
-
   if (!fornavn || !etternavn || !telefon || !epost) {
     return res.status(400).json({ ok: false, error: 'Mangler påkrevde felt' });
   }
-
   try {
     await pool.query(
       `INSERT INTO bestillinger (fornavn, etternavn, telefon, epost, adresse, tjeneste, boligtype, storrelse, melding)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       [fornavn, etternavn, telefon, epost, adresse, tjeneste, boligtype, storrelse, melding]
     );
+
+    await resend.emails.send({
+      from: 'bestilling@baretakst.no',
+      to: process.env.NOTIFY_EMAIL,
+      subject: `Ny bestilling fra ${fornavn} ${etternavn}`,
+      html: `
+        <h2>Ny bestilling – Bare Takst</h2>
+        <p><b>Navn:</b> ${fornavn} ${etternavn}</p>
+        <p><b>Telefon:</b> ${telefon}</p>
+        <p><b>E-post:</b> ${epost}</p>
+        <p><b>Adresse:</b> ${adresse || '–'}</p>
+        <p><b>Tjeneste:</b> ${tjeneste || '–'}</p>
+        <p><b>Boligtype:</b> ${boligtype || '–'}</p>
+        <p><b>Størrelse:</b> ${storrelse || '–'} m²</p>
+        <p><b>Melding:</b> ${melding || '–'}</p>
+      `
+    });
+
     res.json({ ok: true });
   } catch (err) {
     console.error(err);
