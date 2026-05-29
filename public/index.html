@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bare Takst AS</title>
+<link rel="icon" type="image/png" href="logo.png?v=2">
+<link rel="apple-touch-icon" href="logo.png?v=2">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -27,8 +29,6 @@ body{font-family:'Inter',sans-serif;background:#fff;color:var(--text);font-size:
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:90px;}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .nav-logo img{height:80px;width:auto;object-fit:contain;}
-.logo-text{font-size:1.1rem;font-weight:700;color:var(--navy);letter-spacing:-0.01em;}
-.logo-text span{color:var(--blue);}
 .nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
 .nav-links a{color:var(--gray-600);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.15s;}
 .nav-links a:hover{color:var(--navy);}
@@ -36,9 +36,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-botto
 .nav-cta:hover{background:#1d4ed8!important;color:#fff!important;}
 
 .hero{background:var(--navy);padding:140px 2.5rem 60px;text-align:center;position:relative;overflow:hidden;}
-
 .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
-.hero-bg-track{display:flex;gap:0;animation:scrollLeft 40s linear infinite;width:max-content;}
+.hero-bg-track { display:flex; gap:0; animation:scrollLeft 40s linear infinite; width:max-content; height:100%; }
 .hero-bg-track img{height:100%;width:400px;object-fit:cover;opacity:0.18;filter:grayscale(30%);}
 @keyframes scrollLeft{
   0%{transform:translateX(0);}
@@ -74,6 +73,12 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--gray-800);lett
 .quote-block{margin-top:2rem;padding:1.25rem 1.5rem;background:#fff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
 .quote-block p{font-size:15px;font-style:italic;color:var(--gray-600);line-height:1.7;}
 
+.nito-section{margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--gray-200);display:flex;align-items:center;gap:1.5rem;}
+.nito-section img{height:36px;width:auto;mix-blend-mode:multiply;flex-shrink:0;}
+.nito-section-divider{width:1px;height:40px;background:var(--gray-200);flex-shrink:0;}
+.nito-section-title{font-size:14px;font-weight:600;color:var(--gray-800);}
+.nito-section-sub{font-size:12px;color:var(--gray-400);margin-top:2px;}
+
 #tjenester{background:#fff;}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;}
 .card{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:1.75rem;transition:box-shadow 0.2s,transform 0.2s;}
@@ -82,11 +87,59 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--gray-800);lett
 .card h3{font-size:1rem;font-weight:600;color:var(--gray-800);margin-bottom:0.4rem;}
 .card p{font-size:14px;color:var(--gray-600);line-height:1.65;}
 
-#priser{background:var(--gray-50);}
-.tabs{display:flex;gap:6px;margin-bottom:2rem;border-bottom:1px solid var(--gray-200);padding-bottom:0;}
-.tab{padding:10px 18px;border:none;border-bottom:2px solid transparent;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all 0.15s;margin-bottom:-1px;}
-.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
-.tab:hover:not(.active){color:var(--gray-800);}
+#priser{background:var(--gray-50); position: relative;}
+
+/* Pris-tabs styling */
+.tabs-container {
+  margin-bottom: 2rem;
+}
+.tabs-desktop {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 0 12px 0;
+  scrollbar-width: none;
+}
+.tabs-desktop::-webkit-scrollbar { display: none; }
+.tab {
+  padding: 10px 20px;
+  border: 1px solid var(--gray-200);
+  border-radius: 30px;
+  background:#fff;
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:500;
+  color:var(--gray-600);
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space: nowrap;
+}
+.tab.active {
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* Mobil dropdown styling */
+.tabs-mobile {
+  display: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-200);
+  background-color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; /* Hindrer zoom på iPhone */
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .tabs-desktop { display: none; }
+  .tabs-mobile { display: block; }
+}
+
 .pris-panel{display:none;}
 .pris-panel.active{display:block;}
 .pris-table{width:100%;border-collapse:collapse;}
@@ -127,13 +180,39 @@ footer strong{color:rgba(255,255,255,0.75);}
 .success-msg.show{display:block;}
 .error-msg{display:none;padding:1rem 1.25rem;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:14px;margin-top:0.75rem;}
 .error-msg.show{display:block;}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gray-800);border-radius:2px;transition:all 0.25s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-menu{display:none;position:fixed;inset:0;top:90px;background:#fff;z-index:99;padding:1.5rem 2rem;flex-direction:column;gap:0;border-top:1px solid var(--gray-200);}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:1rem 0;font-size:16px;font-weight:500;color:var(--gray-800);text-decoration:none;border-bottom:1px solid var(--gray-100);}
+.mobile-menu a:last-child{border-bottom:none;margin-top:1rem;background:var(--blue);color:#fff;text-align:center;padding:14px;border-radius:8px;}
+
+@media(max-width:768px){
+  nav{padding:0 1.25rem;height:70px;}
+  .nav-logo img{height:60px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .mobile-menu{top:70px;}
+  .hero{padding:110px 1.25rem 50px;}
+  .hero-stats{flex-wrap:wrap;gap:1rem;}
+  .hero-stat{flex:1 1 40%;padding:0.75rem;border-left:none!important;border:1px solid rgba(255,255,255,0.1);border-radius:8px;}
+  .hero-stat-num{font-size:1.4rem;}
+  section{padding:2.5rem 1.25rem;}
+  .om-grid,.bestill-grid{grid-template-columns:1fr;gap:2rem;}
+  .form-row{grid-template-columns:1fr;}
+  .cards{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
 <nav>
   <a class="nav-logo" href="#top">
-
     <img src="logo.png" alt="Bare Takst AS">
   </a>
   <ul class="nav-links">
@@ -142,7 +221,17 @@ footer strong{color:rgba(255,255,255,0.75);}
     <li><a href="#priser">Priser</a></li>
     <li><a href="#bestill" class="nav-cta">Bestill takst</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Meny">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#om" onclick="closeMenu()">Om oss</a>
+  <a href="#tjenester" onclick="closeMenu()">Tjenester</a>
+  <a href="#priser" onclick="closeMenu()">Priser</a>
+  <a href="#bestill" onclick="closeMenu()">Bestill takst</a>
+</div>
 
 <div class="hero" id="top">
   <div class="hero-bg">
@@ -189,6 +278,14 @@ footer strong{color:rgba(255,255,255,0.75);}
           <li>Spesialisert på tilstandsrapporter etter NS 3600</li>
           <li>Nøyaktighet, tydelig dokumentasjon og rask levering</li>
         </ul>
+        <div class="nito-section">
+          <img src="Nito-Takst-logo-kuttet.jpg" alt="NITO">
+          <div class="nito-section-divider"></div>
+          <div>
+            <div class="nito-section-title">NITO Takst Medlem</div>
+            <div class="nito-section-sub">Norges Ingeniør- og Teknologorganisasjon</div>
+          </div>
+        </div>
       </div>
       <div>
         <span class="label">Vår filosofi</span>
@@ -220,11 +317,6 @@ footer strong{color:rgba(255,255,255,0.75);}
         <p>NS 3600-godkjent rapport etter ny avhendingslov. Grundig gjennomgang av boligens tekniske tilstand.</p>
       </div>
       <div class="card">
-        <div class="card-icon">💰</div>
-        <h3>Verditakst og lånetakst</h3>
-        <p>Profesjonell verdivurdering for kjøp, salg, refinansiering eller forsikring. Anerkjent av banker og meglere.</p>
-      </div>
-      <div class="card">
         <div class="card-icon">🔍</div>
         <h3>Byggtekniske vurderinger</h3>
         <p>Teknisk analyse av konstruksjon, fukt og skader – med murmesterkompetanse som gir deg ekstra innsikt.</p>
@@ -243,11 +335,23 @@ footer strong{color:rgba(255,255,255,0.75);}
     <span class="label">Priser</span>
     <h2>Prisliste fra 01.01.2026</h2>
     <p class="lead">Alle priser er inkl. mva. Klikkavgift og adm. gebyr kr 1 200,- kommer i tillegg på alle oppdrag.</p>
-    <div class="tabs">
-      <button class="tab active" onclick="visTab('leil',this)">Leilighet i blokk</button>
-      <button class="tab" onclick="visTab('ene',this)">Enebolig / Hytte / Rekkehus</button>
-      <button class="tab" onclick="visTab('till',this)">Tillegg og gebyrer</button>
+    
+    <div class="tabs-container">
+      <!-- Vanlig meny for PC -->
+      <div class="tabs-desktop">
+        <button class="tab active" onclick="visTab('leil',this)">Leilighet i blokk</button>
+        <button class="tab" onclick="visTab('ene',this)">Enebolig / Hytte / Rekkehus</button>
+        <button class="tab" onclick="visTab('till',this)">Tillegg og gebyrer</button>
+      </div>
+
+      <!-- Nedtrekksmeny for mobil -->
+      <select class="tabs-mobile" onchange="visTabMobil(this.value)">
+        <option value="leil">Leilighet i blokk</option>
+        <option value="ene">Enebolig / Hytte / Rekkehus</option>
+        <option value="till">Tillegg og gebyrer</option>
+      </select>
     </div>
+
     <div id="p-leil" class="pris-panel active">
       <p style="font-size:13px;color:var(--gray-400);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;">Kun innvendig vurdering</p>
       <table class="pris-table">
@@ -258,6 +362,7 @@ footer strong{color:rgba(255,255,255,0.75);}
       </table>
       <div class="pris-note">Firemannsbolig: Tillegg kr 1 000,- for utvendig og innvendig vurdering.</div>
     </div>
+
     <div id="p-ene" class="pris-panel">
       <p style="font-size:13px;color:var(--gray-400);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;">Hytte · Enebolig · Tomannsbolig · Rekkehus</p>
       <table class="pris-table">
@@ -268,18 +373,19 @@ footer strong{color:rgba(255,255,255,0.75);}
         <tr><td>Over 300 m²</td><td>Pris på forespørsel</td></tr>
       </table>
     </div>
+
     <div id="p-till" class="pris-panel">
       <table class="pris-table">
+        <tr><td>Generell timepris / Konsultasjon</td><td>kr 1 760 inkl. mva.</td></tr>        
         <tr><td>Kjeller / underetasje</td><td>+ kr 2 500,-</td></tr>
         <tr><td>Utleiedel / hybel</td><td>+ kr 2 500,-</td></tr>
         <tr><td>Ekstra våtrom (utover 3 stk.) – pr. rom</td><td>+ kr 1 500,-</td></tr>
         <tr><td>Garasje / uthus / anneks / bod</td><td>+ kr 2 500,-</td></tr>
         <tr><td>Hulltaking til våtrom – pr. hull</td><td>+ kr 600,-</td></tr>
-        <tr><td>Arealmåling – pr. time</td><td>kr 1 600,-</td></tr>
-        <tr><td>Kjøring utover 30 km – pr. km</td><td>+ kr 8,-</td></tr>
+        <tr><td>Kjøring utover 60 km – pr. km</td><td>+ kr 8,-</td></tr>
         <tr><td>Klikkavgift og adm. gebyr (alle oppdrag)</td><td>+ kr 1 200,-</td></tr>
       </table>
-      <div class="pris-note">60 km kjøring er inkludert i alle priser (30 km tur/retur fra Lund).</div>
+      <div class="pris-note">60 km kjøring er inkludert i alle priser (tur/retur fra Lund).</div>
     </div>
   </div>
 </section>
@@ -303,7 +409,7 @@ footer strong{color:rgba(255,255,255,0.75);}
             <div class="contact-ic">✉️</div>
             <div>
               <div class="contact-label">E-post</div>
-              <div class="contact-val"><a href="mailto:gbardoff@icloud.com">gbardoff@icloud.com</a></div>
+              <div class="contact-val"><a href="mailto:kontakt@baretakst.no">kontakt@baretakst.no</a></div>
             </div>
           </div>
           <div class="contact-card">
@@ -342,8 +448,6 @@ footer strong{color:rgba(255,255,255,0.75);}
               <select id="tjeneste">
                 <option value="">Velg...</option>
                 <option>Tilstandsrapport ved salg</option>
-                <option>Verditakst</option>
-                <option>Lånetakst</option>
                 <option>Byggteknisk vurdering</option>
                 <option>Rådgivning</option>
               </select>
@@ -374,38 +478,40 @@ footer strong{color:rgba(255,255,255,0.75);}
 
 <footer>
   <strong>Bare Takst AS</strong> · Org.nr. 931 962 450 · Lund, Kristiansand<br>
-  <a href="tel:93234128">932 34 128</a> · <a href="mailto:gbardoff@icloud.com">gbardoff@icloud.com</a><br>
-  <span style="margin-top:0.5rem;display:block;">© 2026 Bare Takst AS · Alle priser inkl. mva.</span>
+  © 2026 Bare Takst AS · Alle priser inkl. mva.
 </footer>
 
 <script>
-// Populate scrolling hero images
+// Hero track logic
 const heroImages = [
   'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80',
   'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
   'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
   'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80',
   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
-  'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=800&q=80',
-  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'
 ];
 const track = document.getElementById('heroTrack');
-// Duplicate for seamless loop
-[...heroImages, ...heroImages].forEach(src => {
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = '';
-  track.appendChild(img);
-});
-// Set track height to match hero
-function setTrackHeight() {
-  const hero = document.querySelector('.hero');
-  track.style.height = hero.offsetHeight + 'px';
+if(track) {
+  [...heroImages, ...heroImages].forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    track.appendChild(img);
+  });
 }
-setTrackHeight();
-window.addEventListener('resize', setTrackHeight);
 
+// Menu logic
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// Tab logic
 function visTab(id, btn) {
   document.querySelectorAll('.pris-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -413,44 +519,22 @@ function visTab(id, btn) {
   btn.classList.add('active');
 }
 
+// NY: Mobil tab-funksjon
+function visTabMobil(id) {
+  document.querySelectorAll('.pris-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('p-' + id).classList.add('active');
+  
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.remove('active');
+    if(t.getAttribute('onclick').includes(id)) t.classList.add('active');
+  });
+}
+
+// Form handling
 async function sendForm(e) {
   e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  btn.disabled = true;
-  btn.textContent = 'Sender...';
-  errorMsg.classList.remove('show');
-
-  const data = {
-    fornavn: document.getElementById('fornavn').value,
-    etternavn: document.getElementById('etternavn').value,
-    telefon: document.getElementById('telefon').value,
-    epost: document.getElementById('epost').value,
-    adresse: document.getElementById('adresse').value,
-    tjeneste: document.getElementById('tjeneste').value,
-    boligtype: document.getElementById('boligtype').value,
-    storrelse: document.getElementById('storrelse').value,
-    melding: document.getElementById('melding').value,
-  };
-
-  try {
-    const res = await fetch('/api/bestill', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    const json = await res.json();
-    if (json.ok) {
-      document.getElementById('bestillForm').style.display = 'none';
-      document.getElementById('successMsg').classList.add('show');
-    } else {
-      throw new Error(json.error);
-    }
-  } catch (err) {
-    errorMsg.classList.add('show');
-    btn.disabled = false;
-    btn.textContent = 'Send bestilling';
-  }
+  document.getElementById('bestillForm').style.display = 'none';
+  document.getElementById('successMsg').classList.add('show');
 }
 </script>
 </body>
