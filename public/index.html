@@ -533,8 +533,39 @@ function visTabMobil(id) {
 // Form handling
 async function sendForm(e) {
   e.preventDefault();
-  document.getElementById('bestillForm').style.display = 'none';
-  document.getElementById('successMsg').classList.add('show');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sender...';
+  document.getElementById('errorMsg').classList.remove('show');
+
+  try {
+    const res = await fetch('/api/bestill', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fornavn: document.getElementById('fornavn').value,
+        etternavn: document.getElementById('etternavn').value,
+        telefon: document.getElementById('telefon').value,
+        epost: document.getElementById('epost').value,
+        adresse: document.getElementById('adresse').value,
+        tjeneste: document.getElementById('tjeneste').value,
+        boligtype: document.getElementById('boligtype').value,
+        storrelse: document.getElementById('storrelse').value,
+        melding: document.getElementById('melding').value,
+      })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      document.getElementById('bestillForm').style.display = 'none';
+      document.getElementById('successMsg').classList.add('show');
+    } else {
+      throw new Error();
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Send bestilling';
+    document.getElementById('errorMsg').classList.add('show');
+  }
 }
 </script>
 </body>
